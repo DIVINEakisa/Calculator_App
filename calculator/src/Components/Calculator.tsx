@@ -1,36 +1,62 @@
 import React, { useReducer, useState } from "react";
 
 export default function Calculator() {
+  const [num1, setNum1] = useState("");
+  const [num2, setNum2] = useState("");
+  const [operator, setOperator] = useState(null);
   let actions = {
     Division: ":",
     Multiplication: "X",
     Substraction: "-",
     Addition: "+",
+    Reset: "Reset",
   };
 
   function reducer(state, action) {
     switch (action.type) {
       case actions.Division:
-        return num1 / num2;
+        return action.num1 / action.num2;
       case actions.Multiplication:
-        return num1 * num2;
+        return action.num1 * action.num2;
       case actions.Substraction:
-        return num1 - num2;
+        return action.num1 - action.num2;
       case actions.Addition:
-        return num1 + num2;
-      default:
+        return action.num1 + action.num2;
+      case actions.Reset:
         return 0;
+      default:
+        return state;
+    }
+  }
+  function handleClick(value) {
+    if (!isNaN(value)) {
+      if (!operator) {
+        setNum1((prev) => prev + value);
+      } else {
+        setNum2((prev) => prev + value);
+      }
+    }
+    if (value == "+" || value == "-" || value == "*" || value == ":") {
+      setOperator(value);
+    }
+    if (value === "AC") {
+      setNum1("");
+      setNum2("");
+      setOperator(null);
+      dispatch({ type: "RESET" });
+    }
+    if (value === "." && !num1.includes(".")) {
+      setNum1((prev) => prev + value);
     }
   }
 
-  const [num1, setNum1] = useState(0);
-  const [num2, setNum2] = useState(0);
-  const [operator, setOperator] = useState(0);
   const [state, dispatch] = useReducer(reducer, 0);
 
   return (
     <main className="bg-[#feebe7] rounded-3xl p-5 w-[300px] mx-auto mt-5 font-bold text-2xl">
-      <div className="bg-gray-400 col-span-4 p-4 mb-2 text-right">{num1}</div>
+      <div className="bg-gray-400 col-span-4 p-4 mb-2 text-right">
+        {state !== 0 ? state : num1 || num2 || 0}
+      </div>
 
       <div className="grid grid-cols-4">
         <div className="p-4 text-center" onClick={() => handleClick("AC")}>
