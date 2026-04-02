@@ -15,6 +15,9 @@ export default function Calculator() {
         return action.num1 * action.num2;
       case "/":
         return action.num2 !== 0 ? action.num1 / action.num2 : "Error";
+      case "+/-":
+        return;
+
       case "RESET":
         return 0;
       default:
