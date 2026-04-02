@@ -89,7 +89,6 @@ export default function Calculator() {
           /
         </div>
 
-        {/* Second row */}
         <div
           className="p-4 text-center bg-gray-200 rounded"
           onClick={() => handleClick("7")}
