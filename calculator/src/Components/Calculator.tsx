@@ -73,21 +73,31 @@ export default function Calculator() {
     "2",
     "3",
     "+",
+    " ",
     "0",
-    "",
     ".",
     "=",
   ];
+  const operators = ["/", "*", "-", "+", "="];
+
   const buttonElements = buttons.map((button, index) => {
+    const isOperator = operators.includes(button);
+
     return (
-      <button key={index} onClick={() => handleClick(button)}>
+      <button
+        key={index}
+        onClick={() => handleClick(button)}
+        className={`p-4 rounded ${
+          isOperator ? "bg-[#f54927] text-white" : "bg-gray-200"
+        }`}
+      >
         {button}
       </button>
     );
   });
   return (
     <main className="bg-[#feebe7] rounded-3xl p-5 w-[300px] mx-auto mt-5 font-bold text-2xl">
-      <div className="bg-gray-400 col-span-4 p-4 mb-2 text-right">
+      <div className="bg-gray-400 p-4 mb-1 text-right">
         {state !== 0 ? state : num2 || num1 || 0}
       </div>
 
