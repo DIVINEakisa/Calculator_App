@@ -15,9 +15,6 @@ export default function Calculator() {
         return action.num1 * action.num2;
       case "/":
         return action.num2 !== 0 ? action.num1 / action.num2 : "Error";
-      case "+/-":
-        return;
-
       case "RESET":
         return 0;
       default:
@@ -57,6 +54,18 @@ export default function Calculator() {
       setNum2("");
       setOperator(null);
       dispatch({ type: "RESET" });
+    } else if (value === "+/-") {
+      if (!operator) {
+        setNum1((prev) => (prev ? (Number(prev) * -1).toString() : prev));
+      } else {
+        setNum2((prev) => (prev ? (Number(prev) * -1).toString() : prev));
+      }
+    } else if (value === "%") {
+      if (!operator) {
+        setNum1((prev) => (prev ? (Number(prev) / 100).toString() : prev));
+      } else {
+        setNum2((prev) => (prev ? (Number(prev) / 100).toString() : prev));
+      }
     }
   }
   const buttons = [
