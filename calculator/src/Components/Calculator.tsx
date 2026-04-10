@@ -54,136 +54,66 @@ export default function Calculator() {
       setNum2("");
       setOperator(null);
       dispatch({ type: "RESET" });
+    } else if (value === "+/-") {
+      if (!operator) {
+        setNum1((prev) => (prev ? (Number(prev) * -1).toString() : prev));
+      } else {
+        setNum2((prev) => (prev ? (Number(prev) * -1).toString() : prev));
+      }
+    } else if (value === "%") {
+      if (!operator) {
+        setNum1((prev) => (prev ? (Number(prev) / 100).toString() : prev));
+      } else {
+        setNum2((prev) => (prev ? (Number(prev) / 100).toString() : prev));
+      }
     }
   }
+  const buttons = [
+    "AC",
+    "+/-",
+    "%",
+    "/",
+    "7",
+    "8",
+    "9",
+    "*",
+    "4",
+    "5",
+    "6",
+    "-",
+    "1",
+    "2",
+    "3",
+    "+",
+    " ",
+    "0",
+    ".",
+    "=",
+  ];
+  const operators = ["/", "*", "-", "+", "="];
 
+  const buttonElements = buttons.map((button, index) => {
+    const isOperator = operators.includes(button);
+
+    return (
+      <button
+        key={index}
+        onClick={() => handleClick(button)}
+        className={`p-4 rounded ${
+          isOperator ? "bg-[#f54927] text-white" : "bg-gray-200"
+        }`}
+      >
+        {button}
+      </button>
+    );
+  });
   return (
     <main className="bg-[#feebe7] rounded-3xl p-5 w-[300px] mx-auto mt-5 font-bold text-2xl">
-      <div className="bg-gray-400 col-span-4 p-4 mb-2 text-right">
+      <div className="bg-gray-400 p-4 mb-1 text-right">
         {state !== 0 ? state : num2 || num1 || 0}
       </div>
 
-      <div className="grid grid-cols-4 gap-2">
-        <div
-          className="p-4 text-center bg-gray-300 rounded"
-          onClick={() => handleClick("AC")}
-        >
-          AC
-        </div>
-        <div
-          className="p-4 text-center bg-gray-300 rounded"
-          onClick={() => handleClick("+/-")}
-        >
-          +/-
-        </div>
-        <div
-          className="p-4 text-center bg-gray-300 rounded"
-          onClick={() => handleClick("%")}
-        >
-          %
-        </div>
-        <div
-          className="p-4 text-center bg-[#f54927] text-white rounded"
-          onClick={() => handleClick("/")}
-        >
-          /
-        </div>
-
-        {/* Second row */}
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("7")}
-        >
-          7
-        </div>
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("8")}
-        >
-          8
-        </div>
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("9")}
-        >
-          9
-        </div>
-        <div
-          className="p-4 text-center bg-[#f54927] text-white rounded"
-          onClick={() => handleClick("*")}
-        >
-          X
-        </div>
-
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("4")}
-        >
-          4
-        </div>
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("5")}
-        >
-          5
-        </div>
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("6")}
-        >
-          6
-        </div>
-        <div
-          className="p-4 text-center bg-[#f54927] text-white rounded"
-          onClick={() => handleClick("-")}
-        >
-          -
-        </div>
-
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("1")}
-        >
-          1
-        </div>
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("2")}
-        >
-          2
-        </div>
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick("3")}
-        >
-          3
-        </div>
-        <div
-          className="p-4 text-center bg-[#f54927] text-white rounded"
-          onClick={() => handleClick("+")}
-        >
-          +
-        </div>
-
-        <div
-          className="p-4 text-center bg-gray-200 rounded col-span-2"
-          onClick={() => handleClick("0")}
-        >
-          0
-        </div>
-        <div
-          className="p-4 text-center bg-gray-200 rounded"
-          onClick={() => handleClick(".")}
-        >
-          .
-        </div>
-        <div
-          className="p-4 text-center bg-[#f54927] text-white rounded"
-          onClick={() => handleClick("=")}
-        >
-          =
-        </div>
-      </div>
+      <div className="grid grid-cols-4 gap-2">{buttonElements}</div>
     </main>
   );
 }
